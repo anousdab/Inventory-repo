@@ -28,5 +28,9 @@ docker-compose up
 mvn spring-boot:run
 
 
+# Possible improvement
+Add other inventory
+Unit tests
+Api documentation
 
 
