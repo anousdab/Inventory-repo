@@ -46,7 +46,7 @@ class ItemEdit extends Component {
             },
             body: JSON.stringify(item),
         });
-        this.props.history.push('/inventory');
+        this.props.history.push('/');
     }
 
     render() {
@@ -63,14 +63,18 @@ class ItemEdit extends Component {
                         <Input type="text" name="name" id="name" value={item.name || ''}
                                onChange={this.handleChange} autoComplete="name"/>
                     </FormGroup>
-                    {/*<FormGroup>*/}
-                    {/*    <Label for="email">Email</Label>*/}
-                    {/*    <Input type="text" name="email" id="email" value={item.email || ''}*/}
-                    {/*           onChange={this.handleChange} autoComplete="email"/>*/}
-                    {/*</FormGroup>*/}
+                    <FormGroup>
+                        <Label for="quantity">Quantity</Label>
+                        <Input type="text" name="quantity" id="quantity" value={item.quantity || ''}
+                               onChange={this.handleChange} autoComplete="quantity"/>
+                    </FormGroup><FormGroup>
+                    <Label for="location">Location</Label>
+                    <Input type="text" name="location" id="location" value={item.location || ''}
+                           onChange={this.handleChange} autoComplete="location"/>
+                </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
-                        <Button color="secondary" tag={Link} to="/clients">Cancel</Button>
+                        <Button color="danger" tag={Link} to="/">Cancel</Button>
                     </FormGroup>
                 </Form>
             </Container>

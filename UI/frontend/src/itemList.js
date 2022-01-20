@@ -29,6 +29,30 @@ class ItemList extends Component {
             this.setState({items: updatedItems});
         });
     }
+    async exportItemToCsv(id) {
+       await fetch(`/inventory/${id}/download`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'text/csv'
+            }
+        }).then(res => res.blob() )
+            .then( blob => {
+                var file = window.URL.createObjectURL(blob);
+                window.location.assign(file);})
+    }
+
+    async exportAllItemToCsv() {
+        await fetch(`/inventory/download`, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'text/csv'
+            }
+        }).then(res => res.blob() )
+            .then( blob => {
+                var file = window.URL.createObjectURL(blob);
+                window.location.assign(file);})
+    }
+
 
     render() {
         const {items, isLoading} = this.state;
@@ -39,10 +63,13 @@ class ItemList extends Component {
 
         const itemList = items.map(item => {
             return <tr key={item.id}>
+                <td style={{whiteSpace: 'nowrap'}}>{item.id}</td>
                 <td style={{whiteSpace: 'nowrap'}}>{item.name}</td>
-                <td>{item.email}</td>
+                <td >{item.quantity}</td>
+                <td>{item.location}</td>
                 <td>
                     <ButtonGroup>
+                        <Button size="sm" color="success" onClick={() => this.exportItemToCsv(item.id)}>Export to CSV</Button>
                         <Button size="sm" color="primary" tag={Link} to={"/items/" + item.id}>Edit</Button>
                         <Button size="sm" color="danger" onClick={() => this.remove(item.id)}>Delete</Button>
                     </ButtonGroup>
@@ -55,15 +82,18 @@ class ItemList extends Component {
                 <AppNavbar/>
                 <Container fluid>
                     <div className="float-right">
-                        <Button color="success" tag={Link} to="/items/new">Add Item</Button>
+                        <Button color="primary" tag={Link} to="/items/new">Add Item</Button>
+                        <Button color="success" tag={Link} onClick={() => this.exportAllItemToCsv()}>Export inventory to CSV</Button>
                     </div>
-                    <h3>Items</h3>
+                    <h3>Inventory</h3>
                     <Table className="mt-4">
                         <thead>
                         <tr>
-                            <th width="30%">Name</th>
-                            {/*<th width="30%">Email</th>*/}
-                            <th width="40%">Actions</th>
+                            <th width="10%">Id</th>
+                            <th width="10%">Name</th>
+                            <th width="10%">Quantity</th>
+                            <th width="10%">Location</th>
+                            <th width="10%">Action</th>
                         </tr>
                         </thead>
                         <tbody>

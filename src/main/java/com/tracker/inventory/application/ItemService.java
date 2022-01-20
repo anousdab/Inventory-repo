@@ -59,13 +59,13 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    public Optional<Item> getItem(UUID itemId) {
+    public Item getItem(UUID itemId) {
 
         boolean exists = itemRepository.existsById(itemId);
         if (!exists) {
             throw new IllegalStateException("item with id" + itemId + "does not exists");
         }
 
-        return itemRepository.findById(itemId);
+        return itemRepository.findById(itemId).get();
     }
 }
