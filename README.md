@@ -10,8 +10,8 @@ Export inventory items data to a CSV for one or many items.
 
 # Routes
 
-http://localhost:8080/ for the web application
-http://localhost:8080/inventory for the api
+-http://localhost:8080/ for the web application
+-http://localhost:8080/inventory for the api
 
 # Deployed App
 
@@ -29,8 +29,8 @@ mvn spring-boot:run
 
 
 # Possible improvement
-Add other inventory
-Unit tests
-Api documentation
+- Add other inventory
+- Unit tests
+- Api documentation
 
 
