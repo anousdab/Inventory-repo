@@ -17,11 +17,15 @@ http://localhost:8080/inventory for the api
 
 https://blooming-depths-69566.herokuapp.com/
 
-# How to run it
+# How to run it with docker
 
 CD src/main/docker 
 
 docker-compose up
+
+# How to run it with maven
+
+mvn spring-boot:run
 
 
 
