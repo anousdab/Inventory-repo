@@ -1,6 +1,7 @@
 # Abstract
 
-This is a simple API made with JAVA SPRING BOOT and postgresSQL for an inventory tracking web application. It supports 1 inventory.
+This is a simple API made with Java Spring Boot and postgreSQL for an inventory tracking web application.
+It supports 1 inventory.
 
 # Features
 
