@@ -5,9 +5,14 @@ It supports 1 inventory.
 
 # Features
 
-Basic CRUD functionality for inventory items.
+##Basic CRUD Functionalities
+###Create inventory items
+###Edit Them
+###Delete Them
+###View a list of them
 
-Export inventory items data to a CSV for one or many items.
+##When deleting, allow deletion comments and undeletion
+##Export inventory items data to a CSV for one or many items.
 
 # Routes
 
