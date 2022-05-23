@@ -9,9 +9,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ItemRepository extends JpaRepository<Item, UUID> {
-
-
     @Query("Select i from Item i where i.name = ?1")
     Optional<Item> findItemByName(String name);
-
 }

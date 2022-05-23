@@ -1,14 +1,16 @@
 package com.tracker.inventory.application;
 
-import com.tracker.inventory.domain.Item;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.UUID;
+import com.tracker.inventory.domain.Item;
 
 @Service
 public class CsvExportationService {
@@ -52,9 +54,10 @@ public class CsvExportationService {
     try (CSVPrinter csvPrinter = new CSVPrinter(response.getWriter(), CSVFormat.DEFAULT)) {
       csvPrinter.printRecord(CSV_HEADER);
 
-      for (Item item : itemService.getItems())
+      for (Item item : itemService.getItems()) {
         csvPrinter.printRecord(
             item.getId(), item.getName(), item.getQuantity(), item.getLocation());
+      }
 
     } catch (IOException e) {
       throw new IllegalStateException("Error While writing CSV ", e);

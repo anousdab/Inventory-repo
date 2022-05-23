@@ -29,16 +29,18 @@ class ItemList extends Component {
             this.setState({items: updatedItems});
         });
     }
+
     async exportItemToCsv(id) {
-       await fetch(`/inventory/${id}/download`, {
+        await fetch(`/inventory/${id}/download`, {
             method: 'get',
             headers: {
                 'Content-Type': 'text/csv'
             }
-        }).then(res => res.blob() )
-            .then( blob => {
+        }).then(res => res.blob())
+            .then(blob => {
                 var file = window.URL.createObjectURL(blob);
-                window.location.assign(file);})
+                window.location.assign(file);
+            })
     }
 
     async exportAllItemToCsv() {
@@ -47,10 +49,11 @@ class ItemList extends Component {
             headers: {
                 'Content-Type': 'text/csv'
             }
-        }).then(res => res.blob() )
-            .then( blob => {
+        }).then(res => res.blob())
+            .then(blob => {
                 var file = window.URL.createObjectURL(blob);
-                window.location.assign(file);})
+                window.location.assign(file);
+            })
     }
 
 
@@ -65,13 +68,14 @@ class ItemList extends Component {
             return <tr key={item.id}>
                 <td style={{whiteSpace: 'nowrap'}}>{item.id}</td>
                 <td style={{whiteSpace: 'nowrap'}}>{item.name}</td>
-                <td >{item.quantity}</td>
+                <td>{item.quantity}</td>
                 <td>{item.location}</td>
                 <td>
                     <ButtonGroup>
-                        <Button size="sm" color="success" onClick={() => this.exportItemToCsv(item.id)}>Export to CSV</Button>
+                        <Button size="sm" color="success" onClick={() => this.exportItemToCsv(item.id)}>Export to
+                            CSV</Button>
                         <Button size="sm" color="primary" tag={Link} to={"/items/" + item.id}>Edit</Button>
-                        <Button size="sm" color="danger" onClick={() => this.remove(item.id)}>Delete</Button>
+                        <Button size="sm" color="danger" tag={Link} to={"/delete/item/" + item.id}>Delete</Button>
                     </ButtonGroup>
                 </td>
             </tr>
@@ -83,7 +87,9 @@ class ItemList extends Component {
                 <Container fluid>
                     <div className="float-right">
                         <Button color="primary" tag={Link} to="/items/new">Add Item</Button>
-                        <Button color="success" tag={Link} onClick={() => this.exportAllItemToCsv()}>Export inventory to CSV</Button>
+                        <Button color="success" tag={Link} onClick={() => this.exportAllItemToCsv()}>Export inventory to
+                            CSV</Button>
+                        <Button color="danger" tag={Link} to="/items/deleted">Recently deleted items</Button>
                     </div>
                     <h3>Inventory</h3>
                     <Table className="mt-4">

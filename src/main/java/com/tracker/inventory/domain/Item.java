@@ -9,11 +9,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.ParamDef;
+import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Type;
 
 
 @Entity
 @Table
+@SQLDelete(sql = "UPDATE item SET is_deleted = true WHERE id=?")
+@FilterDef(
+    name = "deletedItemFilter",
+    parameters = @ParamDef(name = "is_deleted", type = "boolean")
+)
+@Filter(
+    name = "deletedItemFilter",
+    condition = "is_deleted = :is_deleted"
+)
 public class Item {
 
     @Id
@@ -24,6 +37,8 @@ public class Item {
     private String name;
     private Integer quantity;
     private String location;
+    private boolean isDeleted;
+    private String deletionMessage;
 
     public Item() {
     }
@@ -37,14 +52,28 @@ public class Item {
 
     public Item(String name, Integer quantity, String location) {
 
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
+        this.id = UUID.randomUUID();
         this.name = name;
         this.quantity = quantity;
         this.location = location;
     }
 
+
+    public boolean getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(boolean deleted) {
+        isDeleted = deleted;
+    }
+
+    public String getDeletionMessage() {
+        return deletionMessage;
+    }
+
+    public void setDeletionMessage(String deletionMessage) {
+        this.deletionMessage = deletionMessage;
+    }
 
     public UUID getId() {
         return id;

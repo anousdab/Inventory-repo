@@ -15,10 +15,10 @@ public class ItemConfig {
 
         return args -> {
 
-            Item bus = new Item("bus", 1, "Qc");
-            Item hamid = new Item("hamid", 1, "ot");
+            Item item = new Item("chair", 1, "Qc");
+            Item item1 = new Item("desk", 2, "Tor");
 
-            itemRepository.saveAll(List.of(bus, hamid));
+            itemRepository.saveAll(List.of(item, item1));
 
         };
 

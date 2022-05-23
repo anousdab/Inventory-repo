@@ -4,6 +4,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.persistence.EntityManager;
+
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,9 @@ import com.tracker.inventory.domain.ItemRepository;
 public class ItemService {
 
     private final ItemRepository itemRepository;
+
+    @Autowired
+    EntityManager entityManager;
 
     @Autowired
     public ItemService(ItemRepository itemRepository) {
@@ -29,7 +36,6 @@ public class ItemService {
 
         Optional<Item> itemOptional = itemRepository.findItemByName(item.getName());
 
-        //todo:Custom
         if (itemOptional.isPresent()) {
             throw new IllegalStateException("name already taken");
         }
@@ -45,7 +51,6 @@ public class ItemService {
             throw new IllegalStateException("item with id" + itemId + "does not exists");
         }
         itemRepository.deleteById(itemId);
-
     }
 
     //@Transactional
@@ -56,6 +61,10 @@ public class ItemService {
         item.setLocation(modifiedItem.getLocation());
         item.setQuantity(modifiedItem.getQuantity());
         item.setName(modifiedItem.getName());
+        if (modifiedItem.getDeletionMessage() != null) {
+            item.setDeletionMessage(modifiedItem.getDeletionMessage());
+        }
+        item.setIsDeleted(modifiedItem.getIsDeleted());
         itemRepository.save(item);
     }
 
@@ -67,5 +76,14 @@ public class ItemService {
         }
 
         return itemRepository.findById(itemId).get();
+    }
+
+    public List<Item> findAllFilter(boolean isDeleted) {
+        Session session = entityManager.unwrap(Session.class);
+        Filter filter = session.enableFilter("deletedItemFilter");
+        filter.setParameter("is_deleted", isDeleted);
+        List<Item> items = itemRepository.findAll();
+        session.disableFilter("deletedItemFilter");
+        return items;
     }
 }
