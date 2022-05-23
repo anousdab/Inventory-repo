@@ -15,7 +15,7 @@ import com.tracker.inventory.domain.Item;
 import com.tracker.inventory.domain.ItemRepository;
 
 
-@Service //it tell us that it has to be instanciated
+@Service
 public class ItemService {
 
     private final ItemRepository itemRepository;
@@ -41,9 +41,7 @@ public class ItemService {
         }
         itemRepository.save(item);
 
-
     }
-
 
     public void deleteItem(UUID itemId) {
         boolean exists = itemRepository.existsById(itemId);
@@ -53,10 +51,8 @@ public class ItemService {
         itemRepository.deleteById(itemId);
     }
 
-    //@Transactional
     public void updateItem(UUID itemId, Item modifiedItem) {
 
-        //TODO:Validation
         Item item = itemRepository.findById(itemId).orElseThrow(() -> new IllegalStateException("id"));
         item.setLocation(modifiedItem.getLocation());
         item.setQuantity(modifiedItem.getQuantity());
@@ -74,7 +70,6 @@ public class ItemService {
         if (!exists) {
             throw new IllegalStateException("item with id" + itemId + "does not exists");
         }
-
         return itemRepository.findById(itemId).get();
     }
 
